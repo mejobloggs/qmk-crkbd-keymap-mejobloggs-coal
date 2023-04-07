@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼                              ┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
           KC_LGUI   ,KC_Q      ,KC_J      ,KC_V      ,KC_D      ,KC_K      ,                               KC_X      ,KC_H      ,KC_SLSH   ,KC_COMM   ,KC_DOT ,   KC_SCLN     ,
     // ╰──────────┴──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤        ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────┴──────────╯
-                                                        KC_MEH  ,MO(_EXT)  ,KC_SPC    ,       SFT_T(KC_ENT), MO(_SYM), MO(_CANARY)
+                                                        KC_MEH  ,MO(_EXT)  ,SFT_T(KC_SPC),       SFT_T(KC_ENT), MO(_SYM), MO(_CANARY)
                                                 // ╰──────────┴──────────┴──────────╯        ╰──────────┴──────────┴──────────╯
     ),
 
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         KC_TRNS   ,KC_ESC    ,ALT_LEFT  ,LCTL(KC_F),ALT_RIGHT ,KC_INS    ,                               KC_PGUP   ,KC_HOME      ,KC_UP     ,KC_END , KC_CAPS   ,KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        KC_TRNS,    OSM_LALT  ,OSM_LGUI  ,OSM_LSFT  ,OSM_LCTL  ,OSM_RALT  ,                               KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_RGHT   ,KC_DEL    ,KC_TRNS   ,
+        LALT(KC_TAB),OSM_LALT  ,OSM_LGUI  ,OSM_LSFT  ,OSM_LCTL  ,OSM_RALT  ,                               KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_RGHT   ,KC_DEL    ,KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────╮        ╭──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         KC_TRNS   ,LCTL(KC_Z),LCTL(KC_X),LCTL(KC_C),KC_TAB    ,LCTL(KC_V),                               KC_ENT    ,KC_BSPC   ,KC_NO     ,KC_APP    ,KC_PSCR   ,KC_TRNS   ,
     // ╰──────────┴──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤        ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────┴──────────╯
