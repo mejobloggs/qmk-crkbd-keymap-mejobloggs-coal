@@ -31,8 +31,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define QUICK_TAP_TERM 0
 //#define TAPPING_TERM 100
 
-// Tap-hold configuration for home row mods.
-#define TAPPING_TERM 180
-#define IGNORE_MOD_TAP_INTERRUPT
-#define PERMISSIVE_HOLD
-#define TAPPING_FORCE_HOLD_PER_KEY

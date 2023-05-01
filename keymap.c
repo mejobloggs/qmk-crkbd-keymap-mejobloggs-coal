@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
-#include "features/achordion.h"
 
 // Use friendly name for the layers
 #define _CANARY 0
@@ -45,20 +44,30 @@ enum custom_keycodes {
     CANARY = SAFE_RANGE,
     EXT,
     SYM,
-    NUM
+    NUM,
+
+    // :::: Custom keycodes ::::
+    C_UPDIR,
 };
 
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  if (!process_achordion(keycode, record)) { return false; }
-  // Your macros ...
+// :::: Macros ::::
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
 
-  return true;
-}
+    // Macro for ../ in the Symbols layer
+    case C_UPDIR:
+        if (record->event.pressed) {
+            // When key is pressed
+            SEND_STRING("../");
+        } else {
+            // When key is released
+        }
+        break;
+    }
 
-void matrix_scan_user(void) {
-  achordion_task();
-}
+    return true;
+};
 
 
 
@@ -69,11 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
           KC_ESC    ,KC_W      ,KC_L      ,KC_Y      ,KC_P      ,KC_B      ,                               KC_Z      ,KC_F      ,KC_O      ,KC_U      ,KC_QUOT   ,KC_BSPC   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-           KC_TAB,GUI_T(KC_C),ALT_T(KC_R),SFT_T(KC_S),CTL_T(KC_T),KC_G      ,                               KC_M,CTL_T(KC_N),SFT_T(KC_E),ALT_T(KC_I),GUI_T(KC_A),  KC_SCLN    ,
+           KC_TAB   ,KC_C      ,KC_R      ,KC_S      ,KC_T      ,KC_G      ,                               KC_M      ,KC_N      ,KC_E      ,KC_I      ,KC_A   ,  KC_SCLN    ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼                              ┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
           KC_LGUI   ,KC_Q      ,KC_J      ,KC_V      ,KC_D      ,KC_K      ,                               KC_X      ,KC_H      ,KC_SLSH   ,KC_COMM   ,KC_DOT ,  KC_BSLS,
     // ╰──────────┴──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤        ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────┴──────────╯
-                                                    KC_MEH,     MO(_EXT), KC_SPC,   KC_ENT, MO(_SYM),  MO(_NUM)
+                                                    KC_MEH,     MO(_EXT), SFT_T(KC_SPC),   SFT_T(KC_ENT), MO(_SYM),  MO(_NUM)
                                                 // ╰──────────┴──────────┴──────────╯        ╰──────────┴──────────┴──────────╯
     ),
 
@@ -84,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         KC_TRNS   ,KC_ESC    ,ALT_LEFT  ,LCTL(KC_F),ALT_RIGHT ,KC_INS    ,                               KC_PGUP   ,KC_HOME      ,KC_UP     ,KC_END , KC_CAPS   ,KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        LALT(KC_TAB),OSM_LGUI  ,OSM_LALT  ,OSM_LSFT  ,OSM_LCTL  ,OSM_RALT  ,                               KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_RGHT   ,KC_DEL    ,KC_TRNS   ,
+        LALT(KC_TAB),OSM_LALT  ,OSM_LGUI  ,OSM_LSFT  ,OSM_LCTL  ,OSM_RALT  ,                               KC_PGDN   ,KC_LEFT   ,KC_DOWN   ,KC_RGHT   ,KC_DEL    ,KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────╮        ╭──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         KC_TRNS   ,LCTL(KC_Z),LCTL(KC_X),LCTL(KC_C),KC_TAB    ,LCTL(KC_V),                               KC_ENT    ,KC_BSPC   ,KC_NO     ,KC_APP    ,KC_PSCR   ,KC_TRNS   ,
     // ╰──────────┴──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤        ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────┴──────────╯
@@ -96,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_SYM] = LAYOUT_split_3x6_3(
     // ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮                              ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        KC_TRNS   ,KC_DLR    ,KC_LCBR   ,KC_RCBR   ,KC_ASTR   ,KC_CIRC   ,                               KC_PERC   ,KC_AT     ,KC_LT     ,KC_GT     ,KC_TRNS,   KC_TRNS   ,
+        KC_TRNS   ,KC_DLR    ,KC_LCBR   ,KC_RCBR   ,KC_ASTR   ,KC_CIRC   ,                               KC_PERC   ,KC_AT     ,KC_LT     ,KC_GT     ,C_UPDIR,   KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                              ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         KC_TRNS   ,KC_SLSH   ,KC_LPRN   ,KC_RPRN   ,KC_UNDS   ,KC_AMPR   ,                               KC_HASH   ,KC_EQL    ,KC_MINS   ,KC_COLN   ,KC_EXLM   ,KC_TRNS   ,
     // ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────╮        ╭──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
